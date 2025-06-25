@@ -10,12 +10,11 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://aboss-frontend.vercel.app"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "https://aboss-frontend.vercel.app", // Must match exactly
+  credentials: true, // Allows sending cookies from frontend
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
