@@ -13,7 +13,7 @@ const port = process.env.PORT || 8000;
 
 app.use(
   cors({
-    origin: "https://aboss-backend.onrender.com", // Removed trailing slash
+    // origin: "https://aboss-backend.onrender.com", // Removed trailing slash
     credentials: true,
   })
 );
