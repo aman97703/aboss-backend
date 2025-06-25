@@ -13,7 +13,7 @@ const port = process.env.PORT || 8000;
 
 app.use(
   cors({
-    origin: "https://aboss-backend.onrender.com/", // or leave unset since it's same origin now
+    origin: "https://aboss-backend.onrender.com", // Removed trailing slash
     credentials: true,
   })
 );
@@ -23,14 +23,15 @@ app.use(cookieParser());
 
 const __dirname = path.resolve();
 
-app.use(express.static(path.join(__dirname, "public")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 app.use("/api/users", userRoutes);
 app.use("/api/payment", paymentRoutes);
+
+app.use(express.static(path.join(__dirname, "public")));
+
+// Handle SPA routing - serve index.html for all non-API GET requests
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 initDB().then(() => {
   app.listen(port, () => {
